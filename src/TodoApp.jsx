@@ -150,11 +150,6 @@ function TodoApp() {
               src="https://seo1120.github.io/to-do-ver2/pink-dot-star96.png" 
               alt="루미" 
               className="w-8 h-8 md:w-10 md:h-10"
-              onError={(e) => {
-                console.error('이미지 로드 실패:', e.target.src);
-                e.target.style.display = 'none';
-              }}
-              onLoad={() => console.log('이미지 로드 성공')}
             />
             루미의 Todo 리스트 ver2
           </h1>
