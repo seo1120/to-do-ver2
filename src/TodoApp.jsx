@@ -147,7 +147,7 @@ function TodoApp() {
             isDarkMode ? 'text-white' : 'text-gray-600'
           }`}>
             <img 
-              src="./pink-dot-star96.png" 
+              src="/to-do-ver2/pink-dot-star96.png" 
               alt="루미" 
               className="w-8 h-8 md:w-10 md:h-10"
             />
