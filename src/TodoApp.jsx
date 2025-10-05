@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
 import TodoList from './TodoList';
+import starImage from './assets/pink-dot-star96.png';
 
 function TodoApp() {
   const [todos, setTodos] = useState([]);
@@ -147,7 +148,7 @@ function TodoApp() {
             isDarkMode ? 'text-white' : 'text-gray-600'
           }`}>
             <img 
-              src="https://seo1120.github.io/to-do-ver2/pink-dot-star96.png" 
+              src={starImage} 
               alt="루미" 
               className="w-8 h-8 md:w-10 md:h-10"
             />
