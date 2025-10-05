@@ -85,14 +85,14 @@ function TodoApp() {
     }
   };
 
-  const toggleTodo = (id) => {
-    setTodos(todos.map((todo, index) => 
-      index === id ? { ...todo, completed: !todo.completed } : todo
+  const toggleTodo = (todoToToggle) => {
+    setTodos(todos.map(todo => 
+      todo === todoToToggle ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo, index) => index !== id));
+  const deleteTodo = (todoToDelete) => {
+    setTodos(todos.filter(todo => todo !== todoToDelete));
   };
 
   const reorderTodos = (oldIndex, newIndex) => {
@@ -141,42 +141,58 @@ function TodoApp() {
         ? 'bg-gray-900 text-white' 
         : 'bg-pink-50 text-gray-900'
     }`}>
-      <div className="container mx-auto p-4 md:p-8 max-w-4xl">
-        <div className="mb-8">
-          <h1 className={`text-2xl md:text-4xl font-bold text-center ${
-            isDarkMode ? 'text-white' : 'text-gray-800'
+      <div className="container mx-auto p-4 md:p-8 max-w-2xl">
+        <div className="mb-8 text-center">
+          <h1 className={`text-2xl md:text-3xl font-bold mb-2 flex items-center justify-center gap-3 ${
+            isDarkMode ? 'text-white' : 'text-gray-600'
           }`}>
+            <img 
+              src="/pink-dot-star96.png" 
+              alt="루미" 
+              className="w-8 h-8 md:w-10 md:h-10"
+            />
             루미의 Todo 리스트 ver2
           </h1>
+          <p className={`text-sm ${
+            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+          }`}>
+            할 일을 관리하고 꿈을 이뤄가세요! 💕
+          </p>
         </div>
       
       <form onSubmit={(e) => {
         e.preventDefault();
         addTodo();
       }}>
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <input 
-            type="text" 
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="할 일을 입력하세요"
-            className={`flex-1 px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-300 ${
-              isDarkMode 
-                ? 'bg-gray-800/50 border-gray-600 text-white placeholder-gray-400' 
-                : 'bg-white/90 border-pink-200 text-gray-900 placeholder-pink-400'
-            }`}
-          />
-          <button 
-            type="submit"
-            className="w-full md:w-auto px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-pink-200 hover:scale-105"
-          >
-            추가
-          </button>
+        <div className={`p-6 rounded-2xl mb-6 shadow-lg ${
+          isDarkMode 
+            ? 'bg-gray-800/80 backdrop-blur-sm border border-gray-700' 
+            : 'bg-white/80 backdrop-blur-sm border border-pink-200 shadow-pink-100'
+        }`}>
+          <div className="flex flex-col md:flex-row gap-4">
+            <input 
+              type="text" 
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="✨ 새로운 할 일을 입력하세요"
+              className={`flex-1 px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400' 
+                  : 'bg-white/90 border-pink-200 text-gray-900 placeholder-pink-400'
+              }`}
+            />
+            <button 
+              type="submit"
+              className="w-full md:w-auto px-6 py-3 bg-pink-300 hover:bg-pink-500 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-pink-200 hover:scale-105"
+            >
+              ✨ 추가하기
+            </button>
+          </div>
         </div>
       </form>
       
       {/* 검색 및 필터 */}
-      <div className={`p-6 rounded-xl mb-6 transition-all duration-300 shadow-lg ${
+      <div className={`p-6 rounded-2xl mb-6 transition-all duration-300 shadow-lg ${
         isDarkMode 
           ? 'bg-gray-800/80 backdrop-blur-sm border border-gray-700' 
           : 'bg-white/80 backdrop-blur-sm border border-pink-200 shadow-pink-100'
@@ -184,7 +200,7 @@ function TodoApp() {
         <div className="mb-4">
           <input 
             type="text"
-            placeholder="할 일 검색..."
+            placeholder="🔍 할 일을 검색해보세요..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all duration-300 ${
@@ -194,42 +210,42 @@ function TodoApp() {
             }`}
           />
         </div>
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-3 justify-center">
           <button 
             className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
               filter === 'all' 
-                ? 'bg-pink-500 text-white shadow-lg' 
+                ? 'bg-gradient-to-r from-pink-300 to-pink-500 text-white shadow-lg' 
                 : isDarkMode
                   ? 'bg-gray-700/50 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:scale-105'
                   : 'bg-white/80 text-pink-600 border border-pink-200 hover:bg-pink-50 hover:scale-105'
             }`}
             onClick={() => setFilter('all')}
           >
-            전체
+            📋 전체
           </button>
           <button 
             className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
               filter === 'active' 
-                ? 'bg-pink-500 text-white shadow-lg' 
+                ? 'bg-gradient-to-r from-pink-300 to-pink-500 text-white shadow-lg' 
                 : isDarkMode
                   ? 'bg-gray-700/50 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:scale-105'
                   : 'bg-white/80 text-pink-600 border border-pink-200 hover:bg-pink-50 hover:scale-105'
             }`}
             onClick={() => setFilter('active')}
           >
-            진행중
+            ⏳ 진행중
           </button>
           <button 
             className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
               filter === 'completed' 
-                ? 'bg-pink-500 text-white shadow-lg' 
+                ? 'bg-gradient-to-r from-pink-300 to-pink-500 text-white shadow-lg' 
                 : isDarkMode
                   ? 'bg-gray-700/50 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:scale-105'
                   : 'bg-white/80 text-pink-600 border border-pink-200 hover:bg-pink-50 hover:scale-105'
             }`}
             onClick={() => setFilter('completed')}
           >
-            완료
+            ✅ 완료
           </button>
         </div>
       </div>
@@ -245,15 +261,15 @@ function TodoApp() {
             <span className={`text-sm font-medium ${
               isDarkMode ? 'text-gray-300' : 'text-gray-600'
             }`}>전체: {totalTodos}</span>
-            <span className="text-sm font-medium text-pink-500">완료: {completedTodos}</span>
             <span className="text-sm font-medium text-pink-400">진행중: {pendingTodos}</span>
+            <span className="text-sm font-medium text-pink-500">완료: {completedTodos}</span>
           </div>
           <div className="flex items-center gap-4">
             <div className={`flex-1 h-4 rounded-full overflow-hidden ${
               isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
             }`}>
               <div 
-                className="h-full bg-pink-500 transition-all duration-300 ease-in-out"
+                className="h-full bg-pink-300 transition-all duration-300 ease-in-out"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
@@ -271,13 +287,13 @@ function TodoApp() {
         <div className="flex flex-col md:flex-row gap-3 justify-center mb-6">
           <button 
             onClick={completeAll} 
-            className="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-pink-200 hover:scale-105"
+            className="px-6 py-3 bg-pink-300 hover:bg-pink-500 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-pink-200 hover:scale-105"
           >
             모두 완료
           </button>
           <button 
             onClick={deleteAll} 
-            className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-red-200 hover:scale-105"
+            className="px-6 py-3 bg-blue-300 hover:bg-blue-500 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-pink-200 hover:scale-105"
           >
             모두 삭제
           </button>
@@ -308,13 +324,9 @@ function TodoApp() {
         <div className="text-center mt-8 mb-4">
           <button 
             onClick={clearLocalStorage} 
-            className={`text-xs px-3 py-1 rounded-full transition-all duration-300 hover:scale-105 ${
-              isDarkMode 
-                ? 'bg-gray-700/50 text-gray-400 hover:bg-gray-600/50 hover:text-gray-300' 
-                : 'bg-gray-200/50 text-gray-500 hover:bg-gray-300/50 hover:text-gray-600'
-            }`}
+            className="text-xs px-3 py-1 rounded-full bg-pink-300 hover:bg-pink-500 text-white transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-pink-200"
           >
-          데이터 초기화
+            데이터 초기화
           </button>
         </div>
       )}
@@ -324,8 +336,8 @@ function TodoApp() {
         onClick={toggleDarkMode}
         className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg transition-all duration-300 z-50 hover:scale-110 ${
           isDarkMode 
-            ? 'bg-pink-500 hover:bg-pink-600 text-white shadow-pink-200' 
-            : 'bg-gray-800 hover:bg-gray-700 text-white shadow-gray-200'
+            ? 'bg-pink-300 hover:bg-pink-500 text-white shadow-pink-200' 
+            : 'bg-pink-300 hover:bg-pink-500 text-white shadow-pink-200'
         }`}
         title={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
       >

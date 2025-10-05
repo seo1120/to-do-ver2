@@ -36,13 +36,14 @@ function SortableTodoItem({ todo, index, onToggle, onDelete, isDarkMode }) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div ref={setNodeRef} style={style} {...attributes}>
       <TodoItem
         todo={todo}
         index={index}
         onToggle={onToggle}
         onDelete={onDelete}
         isDarkMode={isDarkMode}
+        dragListeners={listeners}
       />
     </div>
   );
@@ -74,14 +75,14 @@ function TodoList({ todos, onToggle, onDelete, onReorder, isDarkMode = false }) 
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={todos.map((todo, index) => todo.id || index)} strategy={verticalListSortingStrategy}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-3">
           {todos.map((todo, index) => (
             <SortableTodoItem
               key={todo.id || index}
               todo={todo}
               index={index}
-              onToggle={onToggle}
-              onDelete={onDelete}
+              onToggle={() => onToggle(todo)}
+              onDelete={() => onDelete(todo)}
               isDarkMode={isDarkMode}
             />
           ))}
